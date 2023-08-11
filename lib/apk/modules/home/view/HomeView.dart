@@ -32,7 +32,7 @@ class Home_View extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.to(()=> search_event_view());
+              Get.to(() => search_event_view());
             },
             icon: Icon(
               Icons.search,
@@ -48,13 +48,17 @@ class Home_View extends StatelessWidget {
           )
         ],
       ),
+
+      // main body
       body: Container(
         padding: EdgeInsets.only(left: 24.w, right: 24.w),
+
+        // we take future builder as we got date from future funtion
         child: FutureBuilder(
           future: controller.getItemList(),
           builder: (context, snapshot) {
+            // if data fetched from api
             if (snapshot.hasData) {
-              // log(snapshot.data!.content.data[0].bannerImage.toString());
               return ListView.builder(
                 itemCount: snapshot.data!.content.data.length,
                 itemBuilder: (context, index) {
@@ -62,7 +66,7 @@ class Home_View extends StatelessWidget {
                       snapshot.data!.content.data[index].dateTime.toString());
                   return InkWell(
                     onTap: () {
-                      Get.to(()=> event_view(
+                      Get.to(() => event_view(
                           eventdata: snapshot.data!.content.data[index]));
                     },
                     child: Container(
@@ -108,7 +112,7 @@ class Home_View extends StatelessWidget {
                                     '${datetime.day.toString().substring(0, 3)}, ${datetime.month!.substring(0, 3)} ${datetime.date!} ',
                                     style: TextStyle(
                                       color: appcolor().blueTextcolor,
-                                      fontSize: 14.sp,
+                                      fontSize: 15.sp,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -121,13 +125,13 @@ class Home_View extends StatelessWidget {
                                     " " + datetime.time.toString(),
                                     style: TextStyle(
                                       color: appcolor().blueTextcolor,
-                                      fontSize: 14.sp,
+                                      fontSize: 18.sp,
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 5.h,
+                                height: 8.h,
                               ),
                               Container(
                                 width: Get.width * 0.5,
@@ -137,20 +141,20 @@ class Home_View extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 15.sp,
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                height: 11.h,
+                                height: 8.h,
                               ),
                               // Spacer(),
                               Row(
                                 children: [
                                   Icon(
                                     Icons.location_pin,
-                                    size: 16.h,
+                                    size: 14.h,
                                     color: appcolor().greycolor,
                                   ),
                                   Container(
@@ -166,21 +170,6 @@ class Home_View extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-
-                                  // Icon(
-                                  //   Icons.circle,
-                                  //   color: appcolor().greycolor,
-                                  //   size: 5.h,
-                                  // ),
-                                  // Text(
-                                  //   ' ${snapshot.data!.content.data[index].venueCountry}',
-                                  //   style: TextStyle(
-                                  //     color: appcolor().greycolor,
-                                  //     fontSize: 15,
-                                  //   ),
-
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
                                 ],
                               ),
                             ],
@@ -193,11 +182,26 @@ class Home_View extends StatelessWidget {
                   );
                 },
               );
-            } else {
+            }
+            // if data is not arrived
+            else if (!snapshot.hasData) {
               return Container(
                 height: Get.height,
                 width: Get.width,
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xff39bfb1),
+                  ),
+                ),
+              );
+            }
+            // in any other cases
+            else {
+              return Container(
+                height: Get.height,
+                width: Get.width,
+                child: Center(
+                    child: Text('Something Went Wrong please try again...')),
               );
             }
           },

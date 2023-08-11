@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tif/apk/global/color.dart';
+import 'package:tif/apk/global/global.dart';
 import 'package:tif/apk/modules/event/view/event_view.dart';
 import 'package:tif/apk/modules/home/controller/home_controller.dart';
+import 'package:tif/apk/modules/home/model/home_item_model.dart';
 import 'package:tif/apk/modules/search_event/controller/search_controller.dart';
 
 class search_event_view extends StatefulWidget {
@@ -50,9 +52,7 @@ class _search_event_viewState extends State<search_event_view> {
                 controller: controller.search_controller,
                 onChanged: (val) {
                   controller.searched_item.value = val;
-                  setState(() {
-                    
-                  });
+                  setState(() {});
                   // log(controller.searched_item.value);
                 },
                 style: TextStyle(
@@ -83,10 +83,19 @@ class _search_event_viewState extends State<search_event_view> {
                     ),
                     itemCount: snapshot.data!.content.data.length,
                     itemBuilder: (context, index) {
-                      String item = controller.search_controller.text.trim().toLowerCase();
-                      String title= snapshot.data!.content.data[index].title.toLowerCase();
-                          
-                          
+                      // item to be search
+                      String item = controller.search_controller.text
+                          .trim()
+                          .toLowerCase();
+
+                      // title of event
+                      String title = snapshot.data!.content.data[index].title
+                          .toLowerCase();
+
+                      customDate event_date_detail = global()
+                          .getCorrectDateFormat(
+                              snapshot.data!.content.data[index].dateTime);
+
                       if (item.isEmpty) {
                         return InkWell(
                           onTap: () {
@@ -129,35 +138,15 @@ class _search_event_viewState extends State<search_event_view> {
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          // '${datetime.day.toString().substring(0, 3)}, ${datetime.month!.substring(0, 3)} ${datetime.date!} ',
-                                          '',
-                                          style: TextStyle(
-                                            color: appcolor().blueTextcolor,
-                                            fontSize: 14.sp,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Icon(
-                                          Icons.circle,
-                                          color: appcolor().blueTextcolor,
-                                          size: 7.h,
-                                        ),
-                                        Text(
-                                          // " " + datetime.time.toString(),
-                                          '',
-                                          style: TextStyle(
-                                            color: appcolor().blueTextcolor,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5.h,
+                                    Text(
+                                      '${event_date_detail.date} ${event_date_detail.month!.substring(0, 3)} -${event_date_detail.day!.substring(0, 3)} -${event_date_detail.time!}',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        color: appcolor().puple,
+                                      ),
                                     ),
                                     Container(
                                       width: Get.width * 0.5,
@@ -168,7 +157,7 @@ class _search_event_viewState extends State<search_event_view> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 15.sp,
+                                          fontSize: 18.sp,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
@@ -177,43 +166,6 @@ class _search_event_viewState extends State<search_event_view> {
                                       height: 11.h,
                                     ),
                                     // Spacer(),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_pin,
-                                          size: 16.h,
-                                          color: appcolor().greycolor,
-                                        ),
-                                        Container(
-                                          width: Get.width * 0.5,
-                                          child: Text(
-                                            ' ${snapshot.data!.content.data[index].venueName} ' +
-                                                ' ${snapshot.data!.content.data[index].venueCity} ' +
-                                                ' ${snapshot.data!.content.data[index].venueCountry.toUpperCase()}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: appcolor().greycolor,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
-
-                                        // Icon(
-                                        //   Icons.circle,
-                                        //   color: appcolor().greycolor,
-                                        //   size: 5.h,
-                                        // ),
-                                        // Text(
-                                        //   ' ${snapshot.data!.content.data[index].venueCountry}',
-                                        //   style: TextStyle(
-                                        //     color: appcolor().greycolor,
-                                        //     fontSize: 15,
-                                        //   ),
-
-                                        //   overflow: TextOverflow.ellipsis,
-                                        // ),
-                                      ],
-                                    ),
                                   ],
                                 ).marginOnly(
                                   top: 7.h,
@@ -225,7 +177,6 @@ class _search_event_viewState extends State<search_event_view> {
                       } else if (title.contains(item)) {
                         return InkWell(
                           onTap: () {
-                            // Get.back();
                             Get.to(event_view(
                                 eventdata: snapshot.data!.content.data[index]));
                           },
@@ -265,35 +216,15 @@ class _search_event_viewState extends State<search_event_view> {
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          // '${datetime.day.toString().substring(0, 3)}, ${datetime.month!.substring(0, 3)} ${datetime.date!} ',
-                                          '',
-                                          style: TextStyle(
-                                            color: appcolor().blueTextcolor,
-                                            fontSize: 14.sp,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Icon(
-                                          Icons.circle,
-                                          color: appcolor().blueTextcolor,
-                                          size: 7.h,
-                                        ),
-                                        Text(
-                                          // " " + datetime.time.toString(),
-                                          '',
-                                          style: TextStyle(
-                                            color: appcolor().blueTextcolor,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5.h,
+                                    Text(
+                                      '${event_date_detail.date} ${event_date_detail.month!.substring(0, 3)} -${event_date_detail.day!.substring(0, 3)} -${event_date_detail.time!}',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        color: appcolor().puple,
+                                      ),
                                     ),
                                     Container(
                                       width: Get.width * 0.5,
@@ -304,7 +235,7 @@ class _search_event_viewState extends State<search_event_view> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 15.sp,
+                                          fontSize: 18.sp,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
@@ -313,43 +244,6 @@ class _search_event_viewState extends State<search_event_view> {
                                       height: 11.h,
                                     ),
                                     // Spacer(),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_pin,
-                                          size: 16.h,
-                                          color: appcolor().greycolor,
-                                        ),
-                                        Container(
-                                          width: Get.width * 0.5,
-                                          child: Text(
-                                            ' ${snapshot.data!.content.data[index].venueName} ' +
-                                                ' ${snapshot.data!.content.data[index].venueCity} ' +
-                                                ' ${snapshot.data!.content.data[index].venueCountry.toUpperCase()}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: appcolor().greycolor,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
-
-                                        // Icon(
-                                        //   Icons.circle,
-                                        //   color: appcolor().greycolor,
-                                        //   size: 5.h,
-                                        // ),
-                                        // Text(
-                                        //   ' ${snapshot.data!.content.data[index].venueCountry}',
-                                        //   style: TextStyle(
-                                        //     color: appcolor().greycolor,
-                                        //     fontSize: 15,
-                                        //   ),
-
-                                        //   overflow: TextOverflow.ellipsis,
-                                        // ),
-                                      ],
-                                    ),
                                   ],
                                 ).marginOnly(
                                   top: 7.h,
@@ -358,10 +252,8 @@ class _search_event_viewState extends State<search_event_view> {
                             ),
                           ),
                         );
-
                       } else {
                         return Container();
-                        
                       }
                     },
                   );

@@ -16,275 +16,289 @@ class event_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     customDate custom_date = global().getCorrectDateFormat(eventdata.dateTime);
-    return Scaffold(
-      floatingActionButton: Container(
-        // margin:EdgeInsets.symmetric(horizontal: 55.w) ,
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        height: 58.h,
-        width: 271.w,
-        decoration: BoxDecoration(
-          color: appcolor().blueTextcolor,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xffffffff).withAlpha(60),
-              blurRadius: 8.0,
-              spreadRadius: 10.0,
-              offset: const Offset(
-                0.0,
-                3.0,
-              ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return Scaffold(
+          floatingActionButton: Container(
+            // margin:EdgeInsets.symmetric(horizontal: 55.w) ,
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            height: 58.h,
+            width: 271.w,
+            decoration: BoxDecoration(
+              color: appcolor().blueTextcolor,
+              borderRadius: BorderRadius.circular(16.r),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 20.0,
+                  color: Color.fromARGB(181, 255, 255, 255),
+                  spreadRadius: 30,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(),
-            Text(
-              'Book Now',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 10,
-              ),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: appcolor().darkBlue,
-              ),
-              child: Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ).paddingOnly(left: Get.width * 0.1, right: Get.width * 0.1),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 221.h,
-              title: Text(
-                eventdata.title,
-                style: TextStyle(fontSize: 24.sp),
-              ),
-              actions: [
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 14.w, vertical: 0.h),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
-                      color: const Color(0xff979797).withOpacity(0.6),
-                    ),
-                    child: Icon(
-                      Icons.bookmark,
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Text(
+                  'Book Now',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: appcolor().darkBlue,
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
                   ),
                 ),
               ],
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  child: Image(
-                    image: NetworkImage(
-                      eventdata.bannerImage,
-                    ),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
             ),
-            SliverList.list(
-              children: [
-                Container(
-                  child: Text(
+          ).paddingOnly(left: Get.width * 0.1, right: Get.width * 0.1),
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  expandedHeight: 221.h,
+                  title: Text(
                     eventdata.title,
-                    style: TextStyle(
-                      fontSize: 35.sp,
-                      color: Colors.black,
-                    ),
+                    style: TextStyle(fontSize: 24.sp),
                   ),
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        right: 10.w,
+                  // backgroundColor: Colors.,
+                  // floating: true,
+                  actions: [
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 1.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 14.w, vertical: 0.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.r),
+                          color: const Color(0xff979797).withOpacity(0.6),
+                        ),
+                        child: Icon(
+                          Icons.bookmark,
+                        ),
                       ),
-                      height: 54.h,
-                      width: 54.w,
-                      child:checkSvg(eventdata.organiserIcon!)==false?  Image(
-                        image:NetworkImage(eventdata.organiserIcon.toString(),
-                            ),
-                        fit: BoxFit.fill,
-                      ):SvgPicture.network(eventdata.organiserIcon),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            eventdata.organiserName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            'Organiser',
-                            style: TextStyle(
-                              color: appcolor().greycolor,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
-
-                // isme work hoga
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        right: 10.w,
-                      ),
-                      height: 54.h,
-                      width: 54.w,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
                       child: Image(
-                        image: AssetImage(
-                          'assets/images/Date.png',
+                        image: NetworkImage(
+                          eventdata.bannerImage,
                         ),
                         fit: BoxFit.fill,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    collapseMode: CollapseMode.parallax,
+                  ),
+                ),
+                SliverList.list(
+                  children: [
+                    Container(
+                      child: Text(
+                        eventdata.title,
+                        style: TextStyle(
+                          fontSize: 35.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+                    Row(
                       children: [
                         Container(
-                          child: Text(
-                            '${custom_date.date} ${custom_date.month}, ${custom_date.year}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                            ),
+                          margin: EdgeInsets.only(
+                            right: 10.w,
                           ),
+                          height: orientation == Orientation.portrait
+                              ? Get.height * 0.065
+                              : Get.height * 0.15,
+                          width:orientation == Orientation.portrait? Get.width*0.14: Get.width*0.07,
+                          child: checkSvg(eventdata.organiserIcon!) == false
+                              ? Image(
+                                  image: NetworkImage(
+                                    eventdata.organiserIcon.toString(),
+                                  ),
+                                  fit: BoxFit.fill,
+                                )
+                              : SvgPicture.network(eventdata.organiserIcon),
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                '${custom_date.day},${custom_date.time} ',
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                eventdata.organiserName,
                                 style: TextStyle(
-                                  color: appcolor().greycolor,
-                                  fontSize: 13.sp,
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              child: Text(
+                                'Organiser',
+                                style: TextStyle(
+                                  color: appcolor().greycolor,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
 
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        right: 10.w,
-                      ),
-                      height: 54.h,
-                      width: 54.w,
-                      child: Image(
-                        image: AssetImage(
-                          'assets/images/Location.png',
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    // isme work hoga
+                    Row(
                       children: [
                         Container(
-                          // height: Get.height * 0.1,
-                          width: Get.width * 0.7,
-                          child: Text(
-                            eventdata.venueName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
+                          margin: EdgeInsets.only(
+                            right: 10.w,
+                          ),
+                          height: orientation == Orientation.portrait
+                              ? Get.height * 0.065
+                              : Get.height * 0.15,
+                          // width: 54.w,
+                          child: Image(
+                            image: AssetImage(
+                              'assets/images/Date.png',
                             ),
-                            // maxLines: 2,
-                            // overflow: TextOverflow.e,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        Container(
-                          width: Get.width * 0.7,
-                          child: Text(
-                            '${eventdata.venueCity}, ${eventdata.venueCountry}',
-                            style: TextStyle(
-                              color: appcolor().greycolor,
-                              fontSize: 14.sp,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                '${custom_date.date} ${custom_date.month}, ${custom_date.year}',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
                             ),
-                          ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '${custom_date.day}, ${custom_date.time} ',
+                                    style: TextStyle(
+                                      color: appcolor().greycolor,
+                                      fontSize: 13.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            right: 10.w,
+                          ),
+                          height: orientation == Orientation.portrait
+                              ? Get.height * 0.065
+                              : Get.height * 0.15,
+                          child: Image(
+                            image: AssetImage(
+                              'assets/images/Location.png',
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              // height: Get.height * 0.1,
+                              width: Get.width * 0.7,
+                              child: Text(
+                                eventdata.venueName,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
+                                ),
+                                // maxLines: 2,
+                                // overflow: TextOverflow.e,
+                              ),
+                            ),
+                            Container(
+                              width: Get.width * 0.7,
+                              child: Text(
+                                '${eventdata.venueCity}, ${eventdata.venueCountry}',
+                                style: TextStyle(
+                                  color: appcolor().greycolor,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+
+                    Container(
+                      child: Text(
+                        'About Event',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+
+                    Container(
+                      width: Get.width,
+                      child: ReadMoreText(
+                        '${eventdata.description}',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                        ),
+                        trimLines: 5,
+                        trimCollapsedText: 'Read More',
+                        trimExpandedText: 'Read Less',
+                      ),
+                    ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
+
+                    // to check sliver effect
+                    SizedBox(
+                      height: 150,
                     ),
                   ],
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
-
-                Container(
-                  child: Text(
-                    'About Event',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
-
-                Container(
-                  width: Get.width,
-                  child: ReadMoreText(
-                    '${eventdata.description}',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.black,
-                    ),
-                    trimLines: 5,
-                    trimCollapsedText: 'Read More',
-                    trimExpandedText: 'Read Less',
-                  ),
-                ).paddingOnly(left: 24.w, top: 21.h, right: 24.w),
-
-                // to check sliver effect
-                SizedBox(
-                  height: 150,
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
-  bool checkSvg(String str)
-  {
-    if(str.substring(str.length-3)=='svg'){log('true'); return  true;}
+
+  bool checkSvg(String str) {
+    if (str.substring(str.length - 3) == 'svg') {
+      log('true');
+      return true;
+    }
     return false;
   }
 }

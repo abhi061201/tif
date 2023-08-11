@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tif/apk/modules/home/view/HomeView.dart';
+import 'package:tif/apk/modules/splash_screen.dart';
 
 void main() {
   runApp(TIF_Assignment());
@@ -28,7 +28,7 @@ class TIF_Assignment extends StatelessWidget {
           home: child,
         );
       },
-      child:  Home_View(),
+      child: splash_screen(),
     );
   }
 }
